@@ -10,15 +10,13 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow()
         self.window = window
-        
-        let startViewController =  MainPageViewController()
+
+        let startViewController = MainPageViewController()
         let navigationController = UINavigationController(rootViewController: startViewController)
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.shadowImage = UIImage()
@@ -27,6 +25,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         return true
     }
-
 }
-

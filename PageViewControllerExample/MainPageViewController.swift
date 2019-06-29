@@ -11,13 +11,28 @@ import UIKit
 class MainPageViewController: UIViewController {
     var mainPageViewController: UIPageViewController?
     var colorList: [UIColor] = [UIColor.blue, UIColor.brown, UIColor.yellow]
-
+    var currentIndex = 0
     /// 뷰를 추가한다.
     @objc func addView() {
         self.colorList.insert(UIColor.red, at: 0)
 
         if let startIngViewController = makeContentViewController(index: 0) {
             self.mainPageViewController!.setViewControllers([startIngViewController], direction: .reverse, animated: true, completion: nil)
+        }
+    }
+
+    @objc func removeView() {
+        if self.colorList.count > 1 {
+            self.colorList.remove(at: self.currentIndex)
+
+            if let startIngViewController = makeContentViewController(index: 0) {
+                self.mainPageViewController!.setViewControllers([startIngViewController], direction: .reverse, animated: true, completion: nil)
+            }
+        }else{
+            let alert = UIAlertController(title: nil, message: "최소 하나의 뷰는 존재해야하므로 \n 더 이상 삭제할 수 없습니다.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default)
+            alert.addAction(okAction)
+            self.present(alert,animated: true)
         }
     }
 
@@ -40,6 +55,7 @@ class MainPageViewController: UIViewController {
 
     /// 네비게이션바에 버튼을 추가한다.
     func addNavigationItem() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "-", style: .plain, target: self, action: #selector(self.removeView))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addView))
     }
 
@@ -69,6 +85,7 @@ class MainPageViewController: UIViewController {
         addChild(mainPageViewController)
         mainPageViewController.didMove(toParent: self)
         mainPageViewController.dataSource = self
+        mainPageViewController.delegate = self
     }
 }
 
@@ -107,13 +124,23 @@ extension MainPageViewController: UIPageViewControllerDataSource {
         return self.makeContentViewController(index: nextIndex)
     }
 
-    //인디케이터의 개수
+    // 인디케이터의 개수
     func presentationCount(for _: UIPageViewController) -> Int {
         return self.colorList.count
     }
 
-    //인디케이터의 초기 값
+    // 인디케이터의 초기 값
     func presentationIndex(for _: UIPageViewController) -> Int {
         return 0
+    }
+}
+
+extension MainPageViewController: UIPageViewControllerDelegate {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating _: Bool, previousViewControllers _: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            if let currentViewController = pageViewController.viewControllers?[0] as? ContentViewController {
+                self.currentIndex = currentViewController.index
+            }
+        }
     }
 }
