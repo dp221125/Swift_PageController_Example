@@ -101,10 +101,10 @@
 			};
 			buildConfigurationList = B45BD24C22C7BFD200557819 /* Build configuration list for PBXProject "PageViewControllerExample" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				ko,
 				Base,
 			);
 			mainGroup = B45BD24822C7BFD200557819;
