@@ -23,8 +23,8 @@ class MainPageViewController: UIViewController {
 
     @objc func removeView() {
         if self.colorList.count > 1 {
+            self.currentIndex = 0
             self.colorList.remove(at: self.currentIndex)
-
             if let startIngViewController = makeContentViewController(index: 0) {
                 self.mainPageViewController!.setViewControllers([startIngViewController], direction: .reverse, animated: true, completion: nil)
             }
